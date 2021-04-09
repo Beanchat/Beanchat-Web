@@ -2,7 +2,7 @@ var messages = document.getElementById("messages");
 
 var msgInput = document.getElementById("msgInput");
 
-var url = "https://api.beanchat.isaacthoman.me/api/App";
+var url = "https://api.isaacthoman.me/api/App";
 
 function Messages(msg){
   if(!!msg)messages.innerHTML = msg;
