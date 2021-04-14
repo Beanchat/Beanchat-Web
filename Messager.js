@@ -43,7 +43,7 @@ async function Refresh() {
 				messages.innerHTML = this.responseText;
 			}
 		};
-		xhttp.open("GET", "url", true);
+		xhttp.open("GET", url, true);
 		xhttp.send();
 	}catch(e){Messages(`HTTPS-ERROR ${e}`, true);}
 }
