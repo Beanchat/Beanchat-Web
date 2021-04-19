@@ -40,8 +40,9 @@ async function Refresh() {
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function () {
 			if (this.readyState === 4 && this.status === 200) {
-				var response = this.responseText
-				messages.innerHTML = response.replaceAll('@newline', '<br>');
+				var response = this.responseText;
+				response = response.replaceAll('@newline', '<br>');
+				messages.innerHTML = response.replaceAll('"', '');
 			}
 		};
 		xhttp.open("GET", url, true);
