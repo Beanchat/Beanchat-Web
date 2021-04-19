@@ -42,7 +42,8 @@ async function Refresh() {
 		xhttp.access-control-allow-origin = *;
 		xhttp.onreadystatechange = function () {
 			if (this.readyState === 4 && this.status === 200) {
-				messages.innerHTML = this.responseText;
+				var response = this.responseText
+				messages.innerHTML = response.replaceAll('@newline', '<br>');
 			}
 		};
 		xhttp.open("GET", url, true);
