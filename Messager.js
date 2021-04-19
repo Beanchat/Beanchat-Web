@@ -50,8 +50,6 @@ async function Refresh() {
 	}catch(e){Messages(`HTTPS-ERROR ${e}`, true);}
 }
 
-var RefreshInterval = 800;
-
 setInterval(function () {
 	Refresh();
 	var interval = document.getElementById("intervalInput").value;
