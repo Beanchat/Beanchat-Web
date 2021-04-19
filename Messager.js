@@ -21,7 +21,7 @@ async function Send() {
 	msgInput.value = "";
 	try{
 		var xhttp = new XMLHttpRequest();
-		xhttp.Access-Control-Allow-Headers = Accept;
+		xhttp.access-control-allow-origin = *;
 		xhttp.onreadystatechange = function () {
 			if (this.readyState === 4 && this.status === 200) {
 				Refresh();
@@ -39,7 +39,7 @@ document.getElementById("send").onclick = function () {
 async function Refresh() {
 	try{
 		var xhttp = new XMLHttpRequest();
-		xhttp.Access-Control-Allow-Headers = Accept;
+		xhttp.access-control-allow-origin = *;
 		xhttp.onreadystatechange = function () {
 			if (this.readyState === 4 && this.status === 200) {
 				messages.innerHTML = this.responseText;
