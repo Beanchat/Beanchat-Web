@@ -2,6 +2,8 @@ var messages = document.getElementById("messages");
 
 var msgInput = document.getElementById("msgInput");
 
+var debug = document.getElementById("debug");
+
 var url = "https://api.isaacthoman.me/api/App";
 
 function Messages(msg, add) {
@@ -15,20 +17,24 @@ function Messages(msg, add) {
 	return messages.innerHTML;
 }
 
-async function Send() {
-	var msg = msgInput.value;
-	if (msg === "") return;
-	msgInput.value = "";
+async function Request(action, url, callback){
 	try{
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function () {
 			if (this.readyState === 4 && this.status === 200) {
-				Refresh();
+				(this.response) => callback();
 			}
 		};
-		xhttp.open("POST", `${url}?message=${msg}`, true);
+		xhttp.open(action, url, true);
 		xhttp.send();
 	}catch(e){Messages(`HTTPS-ERROR ${e}`);}
+}
+
+async function Send() {
+	var msg = msgInput.value;
+	if (msg === "") return;
+	msgInput.value = "";
+	Request("POST", `${url}?message={msg}`, Refresh());
 }
 
 document.getElementById("send").onclick = function () {
@@ -36,27 +42,18 @@ document.getElementById("send").onclick = function () {
 };
 
 async function Refresh() {
-	try{
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function () {
-			if (this.readyState === 4 && this.status === 200) {
-				var response = this.responseText;
-				response = response.replaceAll('@newline', '<br>');
-				messages.innerHTML = response.replaceAll('"', '');
-			}
-		};
-		xhttp.open("GET", url, true);
-		xhttp.send();
-	}catch(e){Messages(`HTTPS-ERROR ${e}`, true);}
+	Request("GET", url, ()=>{
+		var response = this.responseText;
+		response = response.replaceAll('@newline', '<br>');
+		messages.innerHTML = response.replaceAll('"', '');	
+	});
 }
 
-setInterval(function () {
+async function Pulse(){
 	Refresh();
-	var interval = document.getElementById("intervalInput").value;
-	if(interval!=="")RefreshInterval = interval;
-	
-}, RefreshInterval);
+	setTimeout(500, Pulse());
+}
 
-document.getElementById("refresh").onclick = function () {
-	Refresh();
+document.getElementById("body").onload = function () {
+	Pulse();
 };
