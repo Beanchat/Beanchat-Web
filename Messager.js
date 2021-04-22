@@ -22,7 +22,7 @@ async function Request(action, url, callback){
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function () {
 			if (this.readyState === 4 && this.status === 200) {
-				(this.response) => callback();
+				callback(this.response);
 			}
 		};
 		xhttp.open(action, url, true);
@@ -41,9 +41,9 @@ document.getElementById("send").onclick = function () {
 	Send();
 };
 
-async function Refresh() {
+async function Refresh(response) {
 	Request("GET", url, ()=>{
-		var response = this.responseText;
+		var response = response.responseText;
 		response = response.replaceAll('@newline', '<br>');
 		messages.innerHTML = response.replaceAll('"', '');	
 	});
