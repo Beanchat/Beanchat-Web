@@ -30,7 +30,7 @@ async function Request(action, url, callback){
 	}catch(e){Messages(`HTTPS-ERROR ${e}`);}
 }
 
-async function Send() {
+async function Send(_response) {
 	var msg = msgInput.value;
 	if (msg === "") return;
 	msgInput.value = "";
